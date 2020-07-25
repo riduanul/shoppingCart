@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+   <title>Shopping Cart</title>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet" />
+   <link href="style.css" rel="stylesheet">
+</head>
+
+<body>
+
+   <section>
+      <div class="container">
+         <div class="cart">
+            <div class="col-md-12 col-lg-10 mx-auto">
+               <div id="cart-1" class="cart-item">
+                  <div class="row">
+                     <div class="col-md-7 center-item">
+                        <img src="images/product-1.png" alt="">
+                        <h5>iPhone 11 128GB Black</h5>
+                     </div>
+
+                     <div class="col-md-5 center-item">
+                        <div class="input-group number-spinner">
+                           <button onclick="addUnitAndPrice('mobile', false)" class="btn btn-default"><i class="fas fa-minus"></i></button>
+                           <input id="unit-mobile" type="text" class="form-control text-center" value="1">
+                           <button onclick="addUnitAndPrice('mobile', true)" class="btn btn-default"><i class="fas fa-plus"></i></button>
+                        </div>
+                        <h5 id="mobilePrice">$1219</h5>
+                        <img id="remove-mobile" src="images/remove.png" alt="" class="remove-item">
+                     </div>
+                  </div>
+               </div>
+
+               <div id="cart-2" class="cart-item">
+                  <div class="row">
+                     <div class="col-md-7 center-item mx-auto">
+                        <img src="images/product-2.png" alt="">
+                        <h5>iPhone 11 Silicone Case - Black</h5>
+                     </div>
+                     <div class="col-md-5 center-item">
+                        <div class="input-group number-spinner">
+                           <button onclick="addUnitAndPrice('case', false)" class="btn btn-default"><i class="fas fa-minus"></i></button>
+                           <input id="unit-case" type="text" class="form-control text-center" value="1">
+                           <button onclick="addUnitAndPrice('case', true)" class="btn btn-default"><i class="fas fa-plus"></i></button>
+
+                        </div>
+                        <h5 id="casePrice">$59</h5>
+                        <img id="remove-case" src="images/remove.png" alt="" class="remove-item">
+                     </div>
+                  </div>
+               </div>
+
+               <div class="cart-item">
+                  <div class="row">
+
+                     <div class="col-md-8">
+                        <h5>Subtotal: </h5>
+                        <h5 >Tax:</h5>
+                        <h5 >Total:</h5>
+                     </div>
+
+                     <div class="col-md-4 status">
+                        <h5 id="total-price">$1,278</h5>
+                        <h5 id="tax-amount">$0</h5>
+                        <h5 id="grand-total">$1,278</h5>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-md-12 pt-4 pb-4">
+                  <button type="button" class="btn btn-success check-out">Check Out</button>
+               </div>
+            </div>
+         </div>
+      </div>
+      <script>
+            
+           
+            
+
+            function addUnitAndPrice(product, isIncrement){
+               const unit = document.getElementById("unit-" + product);
+               const currentUnit = parseInt(unit.value);
+               let newUnit = currentUnit;
+               if (isIncrement == true){
+                  newUnit = currentUnit + 1;
+               }
+               else if (isIncrement == false && newUnit > 0 ){
+                  newUnit = currentUnit - 1;
+               }
+               unit.value = newUnit;
+               let totalproductPrice = newUnit;
+               if (product == 'mobile'){
+                  totalproductPrice = newUnit * 1219;
+               } 
+               if (product == 'case'){
+                  totalproductPrice = newUnit * 59;
+               }
+               document.getElementById(product + "Price").innerText = "$" + totalproductPrice;
+
+               calculateTotal();
+            }
+
+            function calculateTotal(){
+               const mobileCount = getInputValue('mobile')
+               const caseCount = getInputValue('case')
+
+               const totalPrice = mobileCount * 1219 + caseCount * 59;
+               document.getElementById('total-price').innerText= '$' + totalPrice;
+
+               const tax = Math.round(totalPrice * 0.1);
+               document.getElementById("tax-amount").innerText = "$" + tax;
+
+               const grandTotal = totalPrice + tax;
+               document.getElementById('grand-total').innerText = grandTotal;
+
+
+            } 
+
+            function getInputValue (product){
+               const productInput = document.getElementById("unit-" + product);
+               const productCount = parseInt(productInput.value);
+               return productCount;
+            }
+          //this code not completed yet  
+         const removeCart = document.getElementById("remove-mobile").addEventListener("click", function (){
+            document.getElementById("cart-1").style.display = "none";
+         });
+
+      
+           
+      </script>
+   </section>
+</body>
+
+</html>
